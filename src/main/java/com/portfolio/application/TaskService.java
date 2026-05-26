@@ -2,6 +2,7 @@ package com.portfolio.application;
 
 import com.portfolio.domain.TaskItem;
 import com.portfolio.domain.TaskRepository;
+import io.reactivex.Single;
 
 import java.util.List;
 
@@ -12,16 +13,16 @@ public final class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public TaskItem createTask(String title) {
+    public Single<TaskItem> createTask(String title) {
         if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("title is required");
+            return Single.error(new IllegalArgumentException("title is required"));
         }
 
         TaskItem taskItem = TaskItem.create(title.trim());
         return taskRepository.save(taskItem);
     }
 
-    public List<TaskItem> listTasks() {
+    public Single<List<TaskItem>> listTasks() {
         return taskRepository.findAll();
     }
 }

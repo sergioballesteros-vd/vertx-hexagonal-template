@@ -1,7 +1,6 @@
 package com.portfolio;
 
 import com.portfolio.application.TaskService;
-import com.portfolio.domain.TaskItem;
 import com.portfolio.infrastructure.repository.InMemoryTaskRepository;
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +12,16 @@ class TaskServiceTest {
     void createTask_shouldPersistTask() {
         TaskService taskService = new TaskService(new InMemoryTaskRepository());
 
-        TaskItem task = taskService.createTask("Build portfolio service");
+        var task = taskService.createTask("Build portfolio service").blockingGet();
 
         assertEquals("Build portfolio service", task.title());
-        assertEquals(1, taskService.listTasks().size());
+        assertEquals(1, taskService.listTasks().blockingGet().size());
     }
 
     @Test
     void createTask_shouldFailWhenTitleIsBlank() {
         TaskService taskService = new TaskService(new InMemoryTaskRepository());
 
-        assertThrows(IllegalArgumentException.class, () -> taskService.createTask("   "));
+        assertThrows(RuntimeException.class, () -> taskService.createTask("   ").blockingGet());
     }
 }

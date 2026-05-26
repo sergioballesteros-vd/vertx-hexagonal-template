@@ -2,6 +2,7 @@ package com.portfolio.infrastructure.repository;
 
 import com.portfolio.domain.TaskItem;
 import com.portfolio.domain.TaskRepository;
+import io.reactivex.Single;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ public final class InMemoryTaskRepository implements TaskRepository {
     private final List<TaskItem> store = new CopyOnWriteArrayList<>();
 
     @Override
-    public TaskItem save(TaskItem taskItem) {
+    public Single<TaskItem> save(TaskItem taskItem) {
         store.add(taskItem);
-        return taskItem;
+        return Single.just(taskItem);
     }
 
     @Override
-    public List<TaskItem> findAll() {
-        return new ArrayList<>(store);
+    public Single<List<TaskItem>> findAll() {
+        return Single.just(new ArrayList<>(store));
     }
 }

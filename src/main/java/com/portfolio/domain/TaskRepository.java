@@ -1,9 +1,11 @@
 package com.portfolio.domain;
 
+import io.reactivex.Single;
+
 import java.util.List;
 
 public interface TaskRepository {
-    TaskItem save(TaskItem taskItem);
+    Single<TaskItem> save(TaskItem taskItem);
 
-    List<TaskItem> findAll();
+    Single<List<TaskItem>> findAll();
 }
