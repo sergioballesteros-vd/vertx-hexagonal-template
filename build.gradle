@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.portfolio'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.vertx:vertx-core:4.5.7'
+    implementation 'io.vertx:vertx-web:4.5.7'
+    implementation 'io.vertx:vertx-rx-java2:4.5.7'
+    implementation 'io.vertx:vertx-pg-client:4.5.7'
+    implementation 'com.google.inject:guice:7.0.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+application {
+    mainClass = 'com.portfolio.infrastructure.http.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
